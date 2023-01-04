@@ -18,40 +18,53 @@ Aygıtın Hazırlanması
 --------------------
 
 ### Gerekli Altyapı Uygulamaları
-$ sudo apt-get install gcc-arm* 
-$ sudo apt-get install build-essential 
-$ sudo apt install python3
-$ sudo apt-get install python3-dev
+```bash
+sudo apt-get install gcc-arm* 
+sudo apt-get install build-essential 
+sudo apt install python3
+sudo apt-get install python3-dev
+```
 
 ### RaspberryPi GPIO için gerekli uygulamalar
-$ sudo dietpi-software list | grep gpio
-$ sudo dietpi-software install 69
-$ apt install python3-pip3
-$ sudo apt-get install rpi.gpio
+```bash
+sudo dietpi-software list | grep gpio
+sudo dietpi-software install 69
+apt install python3-pip3
+sudo apt-get install rpi.gpio
+```
 
 ### GPIO uygulamasını non-root kullanıcı ile çalıştırmak için:
-$ sudo adduser "${USER}" dialout
-$ sudo adduser "${USER}" gpio
-$ sudo adduser "${USER}" kmem
-$ sudo vim /etc/udev/rules.d/99-com.rules
+```bash
+sudo adduser "${USER}" dialout
+sudo adduser "${USER}" gpio
+sudo adduser "${USER}" kmem
+sudo vim /etc/udev/rules.d/99-com.rules
+```
 
 ```bash
 SUBSYSTEM=="gpio*", PROGRAM="/bin/sh -c 'chown -R root:gpio /sys/class/gpio && chmod -R 770 /sys/class/gpio; chown -R root:gpio /sys/devices/virtual/gpio && chmod -R 770 /sys/devices/virtual/gpio'"
 ```
 
-$ sudo chmod +x /etc/udev/rules.d/99-com.rules
+```bash
+sudo chmod +x /etc/udev/rules.d/99-com.rules
+```
 
 ### Gerekli Python Kütüphaneleri ve Telegram İstemci Kurulumu
-$ pip install telepot
-$  pip install nums_from_string 
-$  pip install schedule
+```bash
+pip install telepot
+pip install nums_from_string 
+pip install schedule
+```
 
 ### Creating telegram bot:
-open BotFather
+Telegram uygulamasında bot oluşturmak için BotFather ile sohbet etmelisiniz. Sohbete arama kısmından botfather'e aratarak başlayın. Sonra...
 /newbot
 
 Enter name: Coffee-Bot
 .....
+
+Kaynak:
+https://www.telegramadviser.com/tr/how-to-create-telegram-bot/
 
 ### Aygıt Wifi (eduroam) Bağlantısı
 Dietpi'nin eduroam ağlarına bağlanması için 
@@ -100,10 +113,13 @@ Restart=on-failure
 WantedBy=multi-user.target
 ```
 
-Sistem komutları:
-$ systemctl daemon-reload
-$ systemctl enable coffee-bot.service
-$ systemctl start coffee-bot.service
+Oluşturulan hizmeti sisteme tanıtmak ve sistem her başladığında istemcinin başlaması için gerekli komutlar:
+
+```bash
+systemctl daemon-reload
+systemctl enable coffee-bot.service
+systemctl start coffee-bot.service
+```
 
 Kaynak:
 https://wiki.debian.org/systemd/Services
