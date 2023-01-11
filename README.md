@@ -104,7 +104,7 @@ User=dietpi
 Group=dietpi
 
 Type=simple
-ExecStart=python3 /home/dietpi/coffee-bot/main.py
+ExecStart=python3 /home/dietpi/Coffee-Bot/main.py
 TimeoutStopSec=20
 KillMode=process
 Restart=on-failure

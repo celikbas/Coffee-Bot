@@ -78,6 +78,7 @@ def action(msg):
         if 'kahve' in command: # coffee
             GPIO.output(kahve_gpio, 0)
             status.reset()
+            schedule.clear()
             message += " kapandı " # closed
         if 'dakika' in command: # minute
             temp = nums_from_string.get_nums(command)
@@ -87,6 +88,13 @@ def action(msg):
                 schedule.every(temp[0]).minutes.do(job, chat_id)
                 status.dtime = datetime.datetime.now() + datetime.timedelta(minutes = temp[0])
                 message += str(temp[0]) + " dakika sonra kapanacak." # close after x minutes later.
+    # Bundan sonra kısa/hazır komutlar işleniyor
+    elif '/baslat' in command: # start
+        GPIO.output(kahve_gpio, 1)
+        status.onoff = 1
+        message += " açılıyor " # opening...
+        schedule.every(def_off_time).minutes.do(job, chat_id)
+        status.dtime = datetime.datetime.now() + datetime.timedelta(minutes = def_off_time)
     elif 'durum' in command: # status
         message = status_check()
     elif command == '/saat':
@@ -107,4 +115,3 @@ print ('Up and Running....')
 while 1:
     schedule.run_pending()
     time.sleep(10)
-
